@@ -36,6 +36,7 @@ export default function MovieDetailsPage() {
                 width={300}
                 height={400}
                 style={{ margin: '5px 20px 0 0' }}
+                alt="fotoFilm"
               />
             )}
             <div>
@@ -110,6 +111,7 @@ export default function MovieDetailsPage() {
                   width={90}
                   height={120}
                   style={{ margin: '0 20px 0 0' }}
+                  alt="fotoAutor"
                 />
                 <p>{cast.name}</p>
                 <p>Character: {cast.character}</p>

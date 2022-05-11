@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Route, NavLink, useRouteMatch, useLocation } from 'react-router-dom';
 import * as Trending from '../services/FilmsApi';
 import PageHeading from '../components/PageHeading/PageHeading';
-import MovieDetailsPage from '../views/MovieDetailsPage';
 
 export default function HomePage() {
   const location = useLocation();
