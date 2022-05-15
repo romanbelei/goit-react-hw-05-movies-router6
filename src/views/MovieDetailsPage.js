@@ -21,7 +21,6 @@ export default function MovieDetailsPage() {
   const onGoBack = () => {
     history.push(location?.state?.from ?? '/');
   };
-
   return (
     <>
       <button type="button" onClick={onGoBack}>
@@ -80,6 +79,8 @@ export default function MovieDetailsPage() {
                 <NavLink
                   to={{
                     pathname: `${url}/cast`,
+                    // в location.state в свойстві from  знаходиться обєкт locatin звідки ми прийшли
+                    // значить переписуємо туди значення з попередньої сторінки
                     state: { from: location?.state?.from ?? '/' },
                   }}
                 >

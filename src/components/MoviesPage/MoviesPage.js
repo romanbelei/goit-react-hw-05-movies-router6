@@ -22,6 +22,7 @@ export default function Searchbar() {
       return;
     }
     const queryFromString =
+      //зчитуємо з строки запиту параметр query
       new URLSearchParams(location.search).get('query') ?? '';
     if (queryFromString !== query) searhFetch(queryFromString);
   }, [location, history]);
@@ -31,7 +32,6 @@ export default function Searchbar() {
       if (filmSearch.results.length === 0) {
         toast.error('Нічого не знайдено');
       }
-      console.log(filmSearch);
     }
   }, [filmSearch]);
 
@@ -44,6 +44,7 @@ export default function Searchbar() {
     if (query.trim() === '') {
       return toast.error('Введіть назву Фільма');
     }
+    //Добавляємо в силку query для того щоб можна було скопіювати та віддати ссилку)
     history.push({ ...location, search: `query=${query}` });
     searhFetch(query);
   };
