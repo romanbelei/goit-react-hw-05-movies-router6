@@ -12,7 +12,6 @@ export default function HomePage() {
   }, []);
   return (
     <>
-      {/* <Switch> */}
       <Route path="/" exact>
         <PageHeading text="Trending today" />
         {films && (
@@ -34,11 +33,6 @@ export default function HomePage() {
         )}
         <hr />
       </Route>
-
-      {/* <Route path="/movies/:filmId">
-          <MovieDetailsPage  />
-        </Route> */}
-      {/* </Switch> */}
     </>
   );
 }

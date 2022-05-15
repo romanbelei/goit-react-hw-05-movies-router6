@@ -1,61 +1,44 @@
+import { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import AppBar from './AppBar/AppBar';
-import MoviesPage from './MoviesPage/MoviesPage';
 import Container from './Container/Container';
-import HomePage from '../views/HomePage';
-import MovieDetailsPage from '../views/MovieDetailsPage';
+import { ToastContainer } from 'react-toastify';
 
-// import NotFoundView from '../views/NotFoundView';
-// import AuthorsView from './views/AuthorsView';
-// import BooksView from './views/BooksView';
-// import BookDetailsView from './views/BookDetailsView';
-// import NotFoundView from './views/NotFoundView';
+const HomePage = lazy(() =>
+  import('../views/HomePage.jsx' /* webpackChunkName: "homePage-view" */)
+);
+const MoviesPage = lazy(() =>
+  import('./MoviesPage/MoviesPage.js' /* webpackChunkName: "moviesPage-view" */)
+);
+const MovieDetailsPage = lazy(() =>
+  import(
+    '../views/MovieDetailsPage.js' /* webpackChunkName: "movieDetailsPage-view" */
+  )
+);
 
 export default function App() {
   return (
     <Container>
       <AppBar />
 
-      <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        Searchbar
-        <Route path="/movies" exact>
-          <MoviesPage />
-        </Route>
-        <Route path="/movies/:filmId">
-          <MovieDetailsPage />
-        </Route>
-        <Route>
-          <HomePage />
-        </Route>
-      </Switch>
+      <Suspense fallback={<h1>ЗАГРУЖАЄМО</h1>}>
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          Searchbar
+          <Route path="/movies" exact>
+            <MoviesPage />
+          </Route>
+          <Route path="/movies/:filmId">
+            <MovieDetailsPage />
+          </Route>
+          <Route>
+            <HomePage />
+          </Route>
+        </Switch>
+      </Suspense>
+      <ToastContainer autoClose={2000} position="top-center" />
     </Container>
   );
 }
-
-/* <Route path="/books" exact>
-          <BooksView />
-        </Route>
-
-        <Route path="/books/:bookId">
-          <BookDetailsView />
-        </Route> */
-
-// export const App = () => {
-//   return (
-//     <div
-//       style={{
-//         height: '100vh',
-//         display: 'flex',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         fontSize: 40,
-//         color: '#010101',
-//       }}
-//     >
-//       React homework template Ok
-//     </div>
-//   );
-// };

@@ -23,8 +23,17 @@ export default function Searchbar() {
     }
     const queryFromString =
       new URLSearchParams(location.search).get('query') ?? '';
-    searhFetch(queryFromString);
+    if (queryFromString !== query) searhFetch(queryFromString);
   }, [location, history]);
+
+  useEffect(() => {
+    if (filmSearch) {
+      if (filmSearch.results.length === 0) {
+        toast.error('Нічого не знайдено');
+      }
+      console.log(filmSearch);
+    }
+  }, [filmSearch]);
 
   const handleChange = e => {
     setQuery(e.currentTarget.value.toLowerCase());
