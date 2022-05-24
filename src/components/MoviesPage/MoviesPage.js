@@ -25,7 +25,7 @@ export default function Searchbar() {
       //зчитуємо з строки запиту параметр query
       new URLSearchParams(location.search).get('query') ?? '';
     if (queryFromString !== query) searhFetch(queryFromString);
-  }, [location, history]);
+  }, [location, history, query]);
 
   useEffect(() => {
     if (filmSearch) {
