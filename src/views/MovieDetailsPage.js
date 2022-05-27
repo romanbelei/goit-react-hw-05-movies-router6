@@ -1,25 +1,30 @@
 import { useState, useEffect } from 'react';
-import { Route, useParams, useHistory, useLocation } from 'react-router-dom';
+import {
+  NavLink,
+  useParams,
+  Outlet,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
 import * as Trending from '../services/FilmsApi';
-import { NavLink, useRouteMatch } from 'react-router-dom';
 
 export default function MovieDetailsPage() {
   const { filmId } = useParams();
   const [filmById, setfilmById] = useState(null);
-  const [filmCast, setfilmCast] = useState(null);
-  const [filmReviews, setfilmReviews] = useState(null);
-  const { url } = useRouteMatch();
-  const history = useHistory();
+  const [history, setHistory] = useState(null);
   const location = useLocation();
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    setHistory(location);
+  }, []);
   useEffect(() => {
     Trending.FetchFilmById(filmId).then(setfilmById);
-    Trending.FetchFilmCast(filmId).then(setfilmCast);
-    Trending.FetchFilmReviews(filmId).then(setfilmReviews);
   }, [filmId]);
 
   const onGoBack = () => {
-    history.push(location?.state?.from ?? '/');
+    const goback = history?.state?.pathname ?? '/';
+    const query = history?.state?.search ?? '';
+    navigate(`${goback}${query}`);
   };
   return (
     <>
@@ -74,70 +79,37 @@ export default function MovieDetailsPage() {
         {filmById ? (
           <>
             Addtional Information <br></br>
-            <ul>
-              <li key="1">
-                <NavLink
-                  to={{
-                    pathname: `${url}/cast`,
-                    // в location.state в свойстві from  знаходиться обєкт locatin звідки ми прийшли
-                    // значить переписуємо туди значення з попередньої сторінки
-                    state: { from: location?.state?.from ?? '/' },
-                  }}
-                >
-                  Cast
-                </NavLink>
-              </li>
-              <li key="2">
-                <NavLink
-                  to={{
-                    pathname: `${url}/reviews`,
-                    state: { from: location?.state?.from ?? '/' },
-                  }}
-                >
-                  Reviews
-                </NavLink>
-              </li>
-            </ul>
+            {/* <ul> */}
+            <div>
+              <NavLink
+                to={{
+                  pathname: `${history.pathname}/cast`,
+                  // в location.state в свойстві from  знаходиться обєкт locatin звідки ми прийшли
+                  // значить переписуємо туди значення з попередньої сторінки
+                  state: { from: location?.state?.from ?? '/' },
+                }}
+              >
+                Cast
+              </NavLink>
+            </div>
+            <div>
+              <NavLink
+                to={{
+                  pathname: `${history.pathname}/reviews`,
+                  state: { from: location?.state?.from ?? '/' },
+                }}
+              >
+                Reviews
+              </NavLink>
+            </div>
+            {/* </ul> */}
           </>
         ) : (
           <p>We don't have addtional information</p>
         )}
         <hr />
-        <Route path={`${url}/cast`} exact>
-          {filmCast ? (
-            filmCast.cast.map(cast => (
-              <>
-                <img
-                  src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`}
-                  width={90}
-                  height={120}
-                  style={{ margin: '0 20px 0 0' }}
-                  alt="fotoAutor"
-                />
-                <p>{cast.name}</p>
-                <p>Character: {cast.character}</p>
-              </>
-            ))
-          ) : (
-            <p>We don't have any casts for this movie</p>
-          )}
-        </Route>
-        <Route path={`${url}/reviews`} exact>
-          <>
-            {filmReviews && filmReviews.results.length > 0 ? (
-              <ul>
-                {filmReviews.results.map((review, index) => (
-                  <li key={index}>
-                    <h2>Author: {review.author}</h2>
-                    <p>{review.content}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>We don't have any reviews for this movie</p>
-            )}
-          </>
-        </Route>
+
+        <Outlet />
       </>
     </>
   );
