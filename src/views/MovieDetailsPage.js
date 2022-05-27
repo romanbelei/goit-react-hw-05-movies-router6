@@ -14,11 +14,10 @@ export default function MovieDetailsPage() {
   const [history, setHistory] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  useEffect(() => {
-    setHistory(location);
-  }, []);
+
   useEffect(() => {
     Trending.FetchFilmById(filmId).then(setfilmById);
+    setHistory(location);
   }, [filmId]);
 
   const onGoBack = () => {
