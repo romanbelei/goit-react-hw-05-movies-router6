@@ -4,12 +4,12 @@ import * as Trending from '../services/FilmsApi';
 
 export default function MovieDetailsPage() {
   const { filmId } = useParams();
-  const [filmById, setfilmById] = useState(null);
+  //   const [filmById, setfilmById] = useState(null);
   const [filmCast, setfilmCast] = useState(null);
-  const location = useLocation();
+  //   const location = useLocation();
 
   useEffect(() => {
-    Trending.FetchFilmById(filmId).then(setfilmById);
+    // Trending.FetchFilmById(filmId).then(setfilmById);
     Trending.FetchFilmCast(filmId).then(setfilmCast);
   }, [filmId]);
   return (

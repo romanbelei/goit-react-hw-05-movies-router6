@@ -8,9 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Searchbar() {
   const location = useLocation();
+  // const { url } = useRouteMatch();
   const [query, setQuery] = useState('');
   const [filmSearch, setFilmSearch] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams);
 
   useEffect(() => {
     if (location.search === '') {
