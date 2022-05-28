@@ -14,10 +14,12 @@ export default function MovieDetailsPage() {
   const [history, setHistory] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    setHistory(location);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     Trending.FetchFilmById(filmId).then(setfilmById);
-    setHistory(location);
   }, [filmId]);
 
   const onGoBack = () => {
